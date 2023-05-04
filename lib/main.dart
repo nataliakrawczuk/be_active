@@ -9,7 +9,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,6 +30,7 @@ class SpinWheel extends StatefulWidget {
 
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
+  int rewards = 0;
 
   List<int> items = [100, 200, 300];
 
@@ -43,25 +43,63 @@ class _SpinWheelState extends State<SpinWheel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200,
-            child: FortuneWheel(
-              selected: selected.stream,
-              animateFirst: false,
-              items: [
-                for (int i = 0; i < items.length; i++) ...<FortuneItem>{
-                  FortuneItem(
-                    child: Text(items[i].toString()),
-                  ),
-                }
-              ],
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 200,
+              child: FortuneWheel(
+                selected: selected.stream,
+                animateFirst: false,
+                items: [
+                  for (int i = 0; i < items.length; i++) ...<FortuneItem>{
+                    FortuneItem(
+                      child: Text(items[i].toString()),
+                    ),
+                  }
+                ],
+                onAnimationEnd: () {
+                  setState(() {
+                    rewards = items[selected.value];
+                  });
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Congratulation!'),
+                        content: Text('Now stand up and $rewards!'),
+                        actions: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('OK'))
+                        ],
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          )
-        ],
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selected.add(Fortune.randomInt(0, items.length));
+                });
+              },
+              child: Container(
+                height: 50,
+                width: 150,
+                color: Colors.greenAccent,
+                child: Text('SPIN'),
+              ),
+            ),
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
