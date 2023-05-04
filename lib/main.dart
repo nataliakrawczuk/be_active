@@ -30,7 +30,7 @@ class SpinWheel extends StatefulWidget {
 
 class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
-  int rewards = 0;
+  String rewards = '';
 
   List<String> items = [
     'Go jogging',
@@ -70,7 +70,7 @@ class _SpinWheelState extends State<SpinWheel> {
                     .toList(),
                 onAnimationEnd: () {
                   setState(() {
-                    rewards = int.parse(items[selected.value]);
+                    rewards = rewards = items[selected.value];
                   });
 
                   showDialog(
