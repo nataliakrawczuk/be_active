@@ -57,7 +57,8 @@ class _SpinWheelState extends State<SpinWheel> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 200,
+              height: 380,
+              width: 380,
               child: FortuneWheel(
                 selected: selected.stream,
                 animateFirst: false,
@@ -77,7 +78,7 @@ class _SpinWheelState extends State<SpinWheel> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Congratulation!'),
+                        title: const Text('Congratulation!'),
                         content: Text('Now stand up and $rewards!'),
                         actions: [
                           TextButton(
@@ -91,6 +92,9 @@ class _SpinWheelState extends State<SpinWheel> {
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: 100,
             ),
             GestureDetector(
               onTap: () {
