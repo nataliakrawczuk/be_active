@@ -32,7 +32,15 @@ class _SpinWheelState extends State<SpinWheel> {
   final selected = BehaviorSubject<int>();
   int rewards = 0;
 
-  List<int> items = [100, 200, 300];
+  List<String> items = [
+    'Go jogging',
+    'Practice meditation',
+    'Go to the gym',
+    'Go for a walk',
+    'Take a hike',
+    'Go for a bike ride',
+    'Do stretching'
+  ];
 
   @override
   void dispose() {
@@ -53,16 +61,16 @@ class _SpinWheelState extends State<SpinWheel> {
               child: FortuneWheel(
                 selected: selected.stream,
                 animateFirst: false,
-                items: [
-                  for (int i = 0; i < items.length; i++) ...<FortuneItem>{
-                    FortuneItem(
-                      child: Text(items[i].toString()),
-                    ),
-                  }
-                ],
+                items: items
+                    .map(
+                      (item) => FortuneItem(
+                        child: Text(item.toString()),
+                      ),
+                    )
+                    .toList(),
                 onAnimationEnd: () {
                   setState(() {
-                    rewards = items[selected.value];
+                    rewards = int.parse(items[selected.value]);
                   });
 
                   showDialog(
