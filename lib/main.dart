@@ -12,9 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.grey,
       ),
       home: const SpinWheel(),
     );
@@ -39,7 +38,10 @@ class _SpinWheelState extends State<SpinWheel> {
     'Go for a walk',
     'Take a hike',
     'Go for a bike ride',
-    'Do stretching'
+    'Do stretching',
+    'Do Pilates',
+    'Do interval training',
+    'Do yoga',
   ];
 
   @override
@@ -51,6 +53,16 @@ class _SpinWheelState extends State<SpinWheel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.green[50],
+      appBar: AppBar(
+        backgroundColor: Colors.green[200],
+        elevation: 3,
+        title: const Text(
+          'KEEP YOURSELF ACTIVE',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,7 +83,7 @@ class _SpinWheelState extends State<SpinWheel> {
                     .toList(),
                 onAnimationEnd: () {
                   setState(() {
-                    rewards = rewards = items[selected.value];
+                    rewards = items[selected.value];
                   });
 
                   showDialog(
@@ -85,7 +97,7 @@ class _SpinWheelState extends State<SpinWheel> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('OK'))
+                              child: const Text("Sure, I'm on my way"))
                         ],
                       );
                     },
@@ -93,7 +105,7 @@ class _SpinWheelState extends State<SpinWheel> {
                 },
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             GestureDetector(
@@ -103,10 +115,17 @@ class _SpinWheelState extends State<SpinWheel> {
                 });
               },
               child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.grey[400],
+                ),
                 height: 50,
                 width: 150,
-                color: Colors.greenAccent,
-                child: Text('SPIN'),
+                alignment: Alignment.center,
+                child: const Text(
+                  'S P I N',
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ],
