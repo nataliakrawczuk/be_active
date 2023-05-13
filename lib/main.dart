@@ -63,72 +63,80 @@ class _SpinWheelState extends State<SpinWheel> {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 380,
-              width: 380,
-              child: FortuneWheel(
-                selected: selected.stream,
-                animateFirst: false,
-                items: items
-                    .map(
-                      (item) => FortuneItem(
-                        child: Text(item.toString()),
-                      ),
-                    )
-                    .toList(),
-                onAnimationEnd: () {
-                  setState(() {
-                    rewards = items[selected.value];
-                  });
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('images/image1.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 380,
+                width: 380,
+                child: FortuneWheel(
+                  selected: selected.stream,
+                  animateFirst: false,
+                  items: items
+                      .map(
+                        (item) => FortuneItem(
+                          child: Text(item.toString()),
+                        ),
+                      )
+                      .toList(),
+                  onAnimationEnd: () {
+                    setState(() {
+                      rewards = items[selected.value];
+                    });
 
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Congratulation!'),
-                        content: Text('Now stand up and $rewards!'),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text("Sure, I'm on my way"))
-                        ],
-                      );
-                    },
-                  );
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Congratulation!'),
+                          content: Text('Now stand up and $rewards!'),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("Sure, I'm on my way"))
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 100,
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selected.add(Fortune.randomInt(0, items.length));
+                  });
                 },
-              ),
-            ),
-            const SizedBox(
-              height: 100,
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  selected.add(Fortune.randomInt(0, items.length));
-                });
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey[400],
-                ),
-                height: 50,
-                width: 150,
-                alignment: Alignment.center,
-                child: const Text(
-                  'S P I N',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.grey[400],
+                  ),
+                  height: 50,
+                  width: 150,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'S P I N',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
